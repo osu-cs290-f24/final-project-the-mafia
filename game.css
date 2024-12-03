@@ -73,7 +73,7 @@ body{
 
 .User img{
     width: 175px;
-    margin: 0
+    margin: 0;
 }
 
 .user_name{
@@ -89,4 +89,54 @@ body{
     border: 1px solid black;
     bottom: 10px;
     left: 50px;
+}
+
+#modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.50);
+  }
+
+#notYourturnModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1010;
+}
+
+.modal {
+    /*display: none;*/
+    width: auto;
+    max-width: 600px;
+    min-width: 350px;
+    min-height: 300px;
+    margin: 300px auto;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    font-size: 40px;
+    margin: 5% auto;
+    border: 1px solid #888;
+    text-align: center;
+}
+
+#closeModal {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#closeModal:hover {
+    background-color: #45a049;
 }
