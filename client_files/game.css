@@ -58,6 +58,10 @@ body{
     border: 2px dashed red;
 }
 
+#chat-box {
+    scroll-behavior: auto;
+}
+
 #chat_window div {
     max-width: 80%;
     word-wrap: break-word;

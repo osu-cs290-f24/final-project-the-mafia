@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="game.css">
+        <script src="/socket.io/socket.io.js"></script>
 
         <title>Mafia Game</title>
         <h1 id="game_title">Mafia Game</h1>
@@ -19,6 +20,8 @@
             <div id="chat_window">
                 <div id="chat_header">
                     <h2>Chat</h2>
+                </div>
+                <div id="chat-box">
                 </div>
             </div>
             <div id="message-box">
@@ -114,13 +117,13 @@
             </div>
         </section>
 
-        <section id="story">
+        <!-- <section id="story">
             <div id="story_window">
                 <div id="story_header">
                     <h2>Story</h2>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <div id="modal-backdrop" class="hidden"></div>
         <div id="notYourturnModal" class="modal">

@@ -5,7 +5,7 @@ function displayUserMessage(message) {
     const div = document.createElement("div")
     div.textContent = message
     console.log("Adding message", message)
-    document.getElementById("message-box").append(div)
+    document.getElementById("chat-box").append(div)
 }
 
 form.addEventListener("submit", e => {
