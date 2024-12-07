@@ -18,49 +18,13 @@
 
 <body>
 
-<section id="chat">
-    <div id="chat_window">
-        <div id="chat_header">
-            <h2>Chat</h2>
-        </div>
-    </div>
-    <div id="message-box">
-        <form id="form">
-            <input type="text" id="message-input" placeholder="Type here...">
-            <button type="submit" id="send-button">Send</button>
-        </form>
-    </div>
-</section>
-
-
-
-<section id = "users_icons">
-    {{#each user_icons}}
-        {{> userIcon}}
-    {{/each}}
-
-
-
-</section>
-
-<section id="story">
-    <div id="story_window">
-        <div id="story_header">
-            <h2>Story</h2>
-        </div>
-    </div>
-</section>
-
-<div id="modal-backdrop" class="hidden"></div>
-<div id="notYourturnModal" class="modal">
-    <div class="modal-content">
-        <h2>Not your turn.</h2>
-        <p>Please wait for your turn to play.</p>
-        <button id="closeModal">Close</button>
-    </div>
-</div>
+{{{body}}}
 
 
 <script src="../game.js" type="module"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+</script>
 </body>
 </html>
