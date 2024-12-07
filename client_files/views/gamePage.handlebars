@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../game.css">
+
+    <title>Mafia Game</title>
+    <h1 id="game_title">Mafia Game</h1>
+    <h3 id="round_num">Round #X</h3>
+
+    <h2 class="game_state" id="vote_state">Voting Time</h2>
+    <h2 class="game_state" id="story_state">Story Mode Time</h2>
+    <h2 id="time-title">Time Remaining:</h2>
+    <h3> id="time">Time Remaining: 5:00</h3>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.js" charset="utf-8"></script>
+    <script src="../game.js" charset="utf-8" defer></script>
+    <script src="../userIconTemplate.js" charset="utf-8" defer></script>
+</head>
+
+<body>
+
+<section id="chat">
+    <div id="chat_window">
+        <div id="chat_header">
+            <h2>Chat</h2>
+        </div>
+    </div>
+    <div id="message-box">
+        <form id="form">
+            <input type="text" id="message-input" placeholder="Type here...">
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+</section>
+
+
+
+<section id = "users_icons">
+    {{#each user_icons}}
+        {{> userIcon}}
+    {{/each}}
+
+
+
+</section>
+
+<section id="story">
+    <div id="story_window">
+        <div id="story_header">
+            <h2>Story</h2>
+        </div>
+    </div>
+</section>
+
+<div id="modal-backdrop" class="hidden"></div>
+<div id="notYourturnModal" class="modal">
+    <div class="modal-content">
+        <h2>Not your turn.</h2>
+        <p>Please wait for your turn to play.</p>
+        <button id="closeModal">Close</button>
+    </div>
+</div>
+
+
+<script src="../game.js" type="module"></script>
+</body>
+</html>
