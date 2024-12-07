@@ -3,7 +3,6 @@ body{
     margin: 0;
 }
 #game_title{
-
     text-align: center;
 }
 #round_num{
@@ -141,18 +140,18 @@ body{
     right: 0;
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.50);
-  } */
+  } 
 
-/* #notYourturnModal {
+ #notYourturnModal {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1010;
-} */
+}  */
 
-/* .modal {
+ /* .modal {
     display: none;
     width: auto;
     max-width: 600px;
@@ -161,24 +160,24 @@ body{
     margin: 300px auto;
     background-color: #fff;
     border-radius: 15px;
-} */
+} 
 
-/* .modal-content {
+ .modal-content {
     background-color: #fefefe;
     font-size: 40px;
     margin: 5% auto;
     border: 1px solid #888;
     text-align: center;
-} */
+} 
 
-/* #closeModal {
+ #closeModal {
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-} */
+} 
 
-/* #closeModal:hover {
+ #closeModal:hover {
     background-color: #45a049;
 } */
