@@ -79,9 +79,6 @@ function Modal() {
     usernameModal.classList.add("hidden")
 }
 
-var modalClose = document.getElementById("close-modal")
-modalClose.addEventListener("click", Modal)
-
 window.onload = () => {
     document.getElementById("modal-backdrop").classList.remove("hidden")
     document.getElementById("username-modal").classList.remove("hidden")
