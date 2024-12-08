@@ -4,12 +4,17 @@ const form = document.getElementById("form")
 
 socket.on('connect', () => {
     console.log("Connected to server with ID:", socket.id)
+    socket.emit('playerJoined', socket.id)
 })
 
 socket.on('receive-message', (data) => {
     const div = document.createElement("div")
     div.textContent = `${data.id}: ${data.text}`
     document.getElementById("chat-box").append(div)
+})
+
+socket.on('playerScreen', (data) => {
+    console.log('user name: ', data.id)
 })
 
 function displayMessage(user, message) {
