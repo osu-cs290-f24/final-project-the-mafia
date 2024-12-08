@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3001
 
 var expressHandlebars = require('express-handlebars');
 var userData = require("./client_files/userData.json");
+const { create } = require('domain')
 
 // Set Handlebars as the view engine
 app.engine('handlebars', expressHandlebars.engine());
@@ -20,15 +21,37 @@ app.set('views', path.join(__dirname, 'client_files/views'));
 
 app.use(express.static(path.join(__dirname, 'client_files')))
 
+//Implementation of player
+function createPlayer(id, name) {
+    return {
+        id: id,
+        //role: role,
+        name: name,
+        alive: true
+    }
+}
+
+var players = {}
+var playerCount = 0
+
+function assigCharacter() {
+    return userData[playerCount].userName
+}
+
 io.on('connection', (socket) => {
     console.log("User has connected:", socket.id)
+
+    const userName = assigCharacter()
+
+    players[socket.id] = createPlayer(socket.id, userName)
+    playerCount++
 
     socket.on('disconnect', () => {
         console.log("User has disconnected", socket.id)
     })
 
     socket.on("send-message", (message) => {
-        socket.broadcast.emit('receive-message', {id: socket.id, text: message})
+        socket.broadcast.emit('receive-message', {id: players[socket.id].name, text: message})
     })
 })
 

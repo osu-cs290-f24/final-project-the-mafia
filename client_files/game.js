@@ -7,7 +7,7 @@ socket.on('connect', () => {
 
 socket.on('receive-message', (data) => {
     const div = document.createElement("div")
-    div.textContent = `User ${data.id}: ${data.text}`
+    div.textContent = `${data.id}: ${data.text}`
     document.getElementById("chat-box").append(div)
 })
 
