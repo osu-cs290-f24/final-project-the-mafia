@@ -64,4 +64,19 @@ function timeRemaining() {
 }
 
 // Modal Username Implementation
-var modalClose = document.getElementById("")
+
+function Modal() {
+    var modalBackdrop = document.getElementById("modal-backdrop")
+    var usernameModal = document.getElementById("username-modal")
+
+    modalBackdrop.classList.add("hidden")
+    usernameModal.classList.add("hidden")
+}
+
+var modalClose = document.getElementById("close-modal")
+modalClose.addEventListener("click", Modal)
+
+window.onload = () => {
+    document.getElementById("modal-backdrop").classList.remove("hidden")
+    document.getElementById("username-modal").classList.remove("hidden")
+}
