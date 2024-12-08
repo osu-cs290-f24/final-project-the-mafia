@@ -1,3 +1,4 @@
+// Chat Implementation for Client
 const getMessageInput = document.getElementById("message-input")
 const form = document.getElementById("form")
 
@@ -31,7 +32,7 @@ form.addEventListener("submit", e => {
 
     getMessageInput.value = ""
 })
-
+// Timer Implementation
 const initialMinutes = 5;
 var time = initialMinutes * 60
 
@@ -56,3 +57,6 @@ function timeRemaining() {
 
     time--
 }
+
+// Modal Username Implementation
+var modalClose = document.getElementById("")
