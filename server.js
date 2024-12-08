@@ -50,9 +50,13 @@ io.on('connection', (socket) => {
         console.log("User has disconnected", socket.id)
     })
 
-    socket.on('playerJoined', (userId) => {
-        io.emit('playerScreen', {id: players[userId].name})
-    })
+    socket.emit('playerScreen', {id: players[socket.id].name})
+
+    if(playerCount === 5){
+        setTimeout(() => {
+            io.emit('removeModal')
+        }, 5000)
+    }
 
     socket.on("send-message", (message) => {
         socket.broadcast.emit('receive-message', {id: players[socket.id].name, text: message})

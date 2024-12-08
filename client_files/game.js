@@ -4,7 +4,6 @@ const form = document.getElementById("form")
 
 socket.on('connect', () => {
     console.log("Connected to server with ID:", socket.id)
-    socket.emit('playerJoined', socket.id)
 })
 
 socket.on('receive-message', (data) => {
@@ -14,7 +13,14 @@ socket.on('receive-message', (data) => {
 })
 
 socket.on('playerScreen', (data) => {
+    var playerName = data.id
+    var playerNameInput = document.getElementById("player-username")
+    playerNameInput.textContent = "You are: " + playerName
     console.log('user name: ', data.id)
+})
+
+socket.on('removeModal', () => {
+    Modal()
 })
 
 function displayMessage(user, message) {
