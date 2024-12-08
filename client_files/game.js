@@ -1,10 +1,19 @@
 const getMessageInput = document.getElementById("message-input")
 const form = document.getElementById("form")
 
-function displayUserMessage(message) {
+socket.on('connect', () => {
+    console.log("Connected to server with ID:", socket.id)
+})
+
+socket.on('receive-message', (data) => {
     const div = document.createElement("div")
-    div.textContent = message
-    console.log("Adding message", message)
+    div.textContent = `User ${data.id}: ${data.text}`
+    document.getElementById("chat-box").append(div)
+})
+
+function displayMessage(user, message) {
+    const div = document.createElement("div")
+    div.textContent = `${user}: ${message}`
     document.getElementById("chat-box").append(div)
 }
 
@@ -15,7 +24,10 @@ form.addEventListener("submit", e => {
     if (message === "") {
         return
     }
-    displayUserMessage(message)
+
+    socket.emit("send-message", message)
+
+    displayMessage("You", message)
 
     getMessageInput.value = ""
 })

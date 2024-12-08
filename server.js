@@ -22,6 +22,14 @@ app.use(express.static(path.join(__dirname, 'client_files')))
 
 io.on('connection', (socket) => {
     console.log("User has connected:", socket.id)
+
+    socket.on('disconnect', () => {
+        console.log("User has disconnected", socket.id)
+    })
+
+    socket.on("send-message", (message) => {
+        socket.broadcast.emit('receive-message', {id: socket.id, text: message})
+    })
 })
 
 app.get('/', function (req, res) {
