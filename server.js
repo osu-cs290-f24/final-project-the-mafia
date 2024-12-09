@@ -51,6 +51,11 @@ function assigCharacter() {
 }
 
 io.on('connection', (socket) => {
+    if(playerCount >= 5){
+        socket.disconnect(true);
+        console.log("User has disconnected due to max players already reached", socket.id);
+        return;
+    }
     console.log("User has connected:", socket.id)
 
     const userName = assigCharacter()
