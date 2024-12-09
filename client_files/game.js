@@ -19,6 +19,18 @@ socket.on('playerScreen', (data) => {
     console.log('user name: ', data.id)
 })
 
+socket.on('playerRoleDisplay', (data) => {
+    var playerRole = data.role
+    var playerRoleInput = document.getElementById("player-role")
+    if(playerRole === null) {
+        playerRoleInput.textContent = "You are: Civilian"
+    }
+    else{ 
+        playerRoleInput.textContent = "You are: " + playerRole
+    }
+    console.log("Your Role: ", playerRole)
+})
+
 socket.on('removeModal', () => {
     Modal()
 })

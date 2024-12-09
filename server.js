@@ -56,10 +56,11 @@ io.on('connection', (socket) => {
         randomlyAssignRoles()
         Object.keys(players).forEach(playerID => {
             console.log(`Player ${playerID} Role: ${players[playerID].role}`);
+            io.to(playerID).emit('playerRoleDisplay', {role: players[playerID].role})
         });
         setTimeout(() => {
             io.emit('removeModal')
-        }, 5000)
+        }, 10000)
         // Implement the logic where if five players have joined the game, we randomly give out roles to three of the players
     }
 
