@@ -31,8 +31,20 @@ function createPlayer(id, name) {
     }
 }
 
+let gameState = {
+    roundNumber: 0,
+    phase: 0, // 0: mafia, 1: doctor, 2: sherrif, 3: voting, then restart
+    mafiaId: null,
+    doctorId: null,
+    sherifId: null,
+    mafiaTarget: null,
+    doctorTarget: null,
+    playerVotes: {}
+}
+
 var players = {}
 var playerCount = 0
+var playersAlive = 5
 
 function assigCharacter() {
     return userData[playerCount].userName
@@ -60,6 +72,7 @@ io.on('connection', (socket) => {
         });
         setTimeout(() => {
             io.emit('removeModal')
+            gamePlay()
         }, 10000)
         // Implement the logic where if five players have joined the game, we randomly give out roles to three of the players
     }
@@ -88,9 +101,54 @@ function randomlyAssignRoles() {
             const role = specialRoles[assignedRoles.size]
             // We assign that role to the player
             players[randomPlayerID].role = role
+            if(role === 'Mafia'){
+                gameState.mafiaId = randomPlayerID
+            } else if (role === 'Doctor') {
+                gameState.doctorId = randomPlayerID
+            } else if (role === 'Sheriff') {
+                gameState.sherifId = randomPlayerID
+            }
             // And then just add that role to the set
             assignedRoles.add(role)
         }
+    }
+}
+
+function gamePlay(){
+    if(gameState.phase === 0) {
+        io.emit('notTurnModal')
+        io.to(gameState.mafiaId).emit('yourTurnModal', { role: 'Mafia'})
+        setTimeout(() => {
+           // players[gameState.mafiaTarget].alive = false
+            gameState.phase = 1
+            gamePlay()
+        }, 5000)
+    } else if(gameState.phase === 1) {
+        io.emit('notTurnModal')
+        io.to(gameState.doctorId).emit('yourTurnModal', { role: 'Doctor'})
+        setTimeout(() => {
+            /*
+            if(gameState.mafiaTarget === gameState.doctorTarget){
+                players[gameState.doctorTarget].alive = true
+            }
+            */
+            gameState.phase = 2
+            gamePlay()
+        }, 5000)
+    } else if(gameState.phase === 2) {
+        io.emit('notTurnModal')
+        io.to(gameState.sherifId).emit('yourTurnModal', { role: 'Sherif'})
+        setTimeout(() => {
+            gameState.phase = 3
+            gamePlay()
+        }, 5000)
+    } else if(gameState.phase === 3) {
+        io.emit('yourTurnModal')
+        setTimeout(() => {
+            gameState.playerVotes = {}
+            gameState.phase = 0
+            gamePlay()
+        }, 15000)
     }
 }
 

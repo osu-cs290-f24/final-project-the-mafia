@@ -1,6 +1,7 @@
 // Chat Implementation for Client
 const getMessageInput = document.getElementById("message-input")
 const form = document.getElementById("form")
+const chooseButton = document.getElementById('voteButton')
 
 socket.on('connect', () => {
     console.log("Connected to server with ID:", socket.id)
@@ -35,6 +36,14 @@ socket.on('removeModal', () => {
     Modal()
 })
 
+socket.on('notTurnModal', () => {
+    notTurnModal()
+})
+
+socket.on('yourTurnModal', (data) => {
+    yourTurnModal()
+})
+
 function displayMessage(user, message) {
     const div = document.createElement("div")
     div.textContent = `${user}: ${message}`
@@ -55,6 +64,11 @@ form.addEventListener("submit", e => {
 
     getMessageInput.value = ""
 })
+
+chooseButton.addEventListener('click', vote => {
+    // gets the name of the user that was voted for
+})
+
 // Timer Implementation
 const initialMinutes = 5;
 var time = initialMinutes * 60
@@ -89,6 +103,26 @@ function Modal() {
 
     modalBackdrop.classList.add("hidden")
     usernameModal.classList.add("hidden")
+}
+
+function notTurnModal() {
+    var turnModalBackdrop = document.getElementById("turn-modal-backdrop")
+    var turnModal = document.getElementById("turn-modal")
+
+    if(turnModalBackdrop.classList.contains('turnHidden') && turnModal.classList.contains('turnHidden')){
+        turnModalBackdrop.classList.remove("turnHidden")
+        turnModal.classList.remove('turnHidden')
+    }
+}
+
+function yourTurnModal() {
+    var turnModalBackdrop = document.getElementById("turn-modal-backdrop")
+    var turnModal = document.getElementById("turn-modal")
+
+    if(!(turnModalBackdrop.classList.contains('turnHidden') && turnModal.classList.contains('turnHidden'))){
+        turnModalBackdrop.classList.add("turnHidden")
+        turnModal.classList.add('turnHidden')
+    }
 }
 
 window.onload = () => {
