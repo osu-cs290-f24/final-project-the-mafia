@@ -297,4 +297,48 @@ p {
     display: none;
   }
 
+#win-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background: linear-gradient(to bottom, #1a1a1a, #000000);
+    padding: 20px;
+
+}
+#win-title h1{
+    font-size: 3em;
+    margin: 0;
+    padding: 100px;
+}
+#win-title h4{
+    font-size: 2em;
+    margin: 0;
+    padding: 50px;
+}
+#win-title h3{
+    font-size: 1.5em;
+    margin: 0;
+    padding: 20px;
+}
+
+#block-round{
+    position: absolute;
+    height: 50px;
+    width: 120px;
+    background: #1a1a1a;
+    left: 45px;
+    top: 40px;
+}
+#block-time{
+    position: absolute;
+    height: 50px;
+    width: 300px;
+    background: #1a1a1a;
+    right: 30px;
+    top: 50px;
+
+}
 
