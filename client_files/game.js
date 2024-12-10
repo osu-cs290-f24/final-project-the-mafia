@@ -32,6 +32,38 @@ socket.on('playerRoleDisplay', (data) => {
     console.log("Your Role: ", playerRole)
 })
 
+
+// Doctor Modals
+socket.on('removeDoctorModal', () => {
+    var doctorBackdrop = document.getElementById("doctor-modal-backdrop")
+    var doctorModal = document.getElementById("doctor-modal")
+
+    doctorBackdrop.classList.add("doctorHidden")
+    doctorModal.classList.add("doctorHidden")
+})
+
+socket.on('doctorModal', (data) => {
+    var doctorBackdrop = document.getElementById("doctor-modal-backdrop")
+    var doctorModal = document.getElementById("doctor-modal")
+    var doctorContent = doctorModal.querySelector(".doctor-content")
+
+    doctorBackdrop.classList.remove("doctorHidden")
+    doctorModal.classList.remove("doctorHidden")
+
+    doctorContent.innerHTML = '<h2>Choose who to save:</h2>'
+
+    data.players.forEach(player => {
+        let button = document.createElement("button")
+        button.textContent = player
+        button.addEventListener('click', () => {
+
+        })
+        doctorContent.appendChild(button)
+    })
+})
+
+
+// Mafia Modals
 socket.on('removeMafiaModal', () => {
     var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
     var mafiaModal = document.getElementById("mafia-modal")
@@ -52,14 +84,17 @@ socket.on('mafiaModal', (data) => {
 
     data.players.forEach(player => {
         let button = document.createElement("button")
-        button.textContent = player
-        console.log("== mafia-content:", mafiaContent)
+        button.textContent = player.name
         button.addEventListener('click', ()=> {
-            
+            const targetID = player.id
+            socket.emit("mafiaTarget", {targetID: player.id})
         })
-        mafiaContent.appendChild(button)
+        if (player.alive) {
+            mafiaContent.appendChild(button)
+        }
     })
 })
+
 
 socket.on('removeModal', () => {
     Modal()

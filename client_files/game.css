@@ -266,53 +266,33 @@ p {
     display: none;
 }
 
-
-/* #modal-backdrop {
+#doctor-modal-backdrop {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.50);
-  } 
+    background-color: rgba(0, 0, 0, 0.6);
+}
 
- #notYourturnModal {
+#doctor-modal {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1010;
-}  
-
- .modal {
-    display: none;
-    width: auto;
-    max-width: 600px;
-    min-width: 350px;
-    min-height: 300px;
-    margin: 300px auto;
-    background-color: #fff;
-    border-radius: 15px;
-} 
-
- .modal-content {
-    background-color: #fefefe;
-    font-size: 40px;
-    margin: 5% auto;
-    border: 1px solid #888;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-} 
+    height: 400px;
+    width: 500px;
+  }
 
- #closeModal {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-} 
+  .doctorHidden {
+    display: none;
+  }
 
- #closeModal:hover {
-    background-color: #45a049;
-} */
+

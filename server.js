@@ -67,14 +67,15 @@ io.on('connection', (socket) => {
         console.log("User has disconnected", socket.id)
     })
 
-    socket.emit('playerScreen', {id: players[socket.id].name})
-
-    socket.on('chooseTarget', (targetID) => {
-        if (socket.id === gameState.mafiaId && players[targetID]?.alive) {
-            gameState.mafiaTarget = targetID
-            console.log(`Mafia chose target: ${players[targetID].name}`)
-        }
+    socket.on('mafiaTarget', (data) => {
+         if (socket.id === gameState.mafiaId) {
+            gameState.mafiaTarget = data.targetID
+            players[data.targetID].alive = false
+            console.log(`${players[data.targetID].name} has been killed by the Mafia.`)
+         }
     })
+
+    socket.emit('playerScreen', {id: players[socket.id].name})
 
     if(playerCount === 5){
         randomlyAssignRoles()
@@ -131,7 +132,9 @@ function gamePlay(){
         io.to(gameState.mafiaId).emit('yourTurnModal', { role: 'Mafia'})
         io.to(gameState.mafiaId).emit('mafiaModal', { 
             role: 'Mafia',
-            players: Object.keys(players).filter(playerID => playerID !== gameState.mafiaId).map(playerID => players[playerID].name)
+            players: Object.keys(players)
+            .filter(playerID => playerID !== gameState.mafiaId)
+            .map(playerID => ({id: playerID, name: players[playerID].name, alive: players[playerID].alive}))
         })
         setTimeout(() => {
             io.to(gameState.mafiaId).emit('removeMafiaModal')
@@ -142,18 +145,21 @@ function gamePlay(){
     } else if(gameState.phase === 1) {
         io.emit('notTurnModal')
         io.to(gameState.doctorId).emit('yourTurnModal', { role: 'Doctor'})
+        io.to(gameState.doctorId).emit('doctorModal', { 
+            role: 'Doctor',
+            players: Object.keys(players).map(playerID => players[playerID].name)
+        })
         setTimeout(() => {
-            /*
-            if(gameState.mafiaTarget === gameState.doctorTarget){
-                players[gameState.doctorTarget].alive = true
-            }
-            */
+            io.to(gameState.doctorId).emit('removeDoctorModal')
+            io.emit('notTurnModal')
             gameState.phase = 2
             gamePlay()
         }, 5000)
     } else if(gameState.phase === 2) {
         io.emit('notTurnModal')
-        io.to(gameState.sherifId).emit('yourTurnModal', { role: 'Sherif'})
+        io.to(gameState.sherifId).emit('yourTurnModal', { 
+            role: 'Sherif'
+        })
         setTimeout(() => {
             gameState.phase = 3
             gamePlay()
