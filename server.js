@@ -72,6 +72,7 @@ io.on('connection', (socket) => {
             gameState.mafiaTarget = data.targetID
             players[data.targetID].alive = false
             console.log(`${players[data.targetID].name} has been killed by the Mafia.`)
+            io.to(gameState.mafiaId).emit('removeMafiaModal', {true: true})
          }
     })
 
@@ -137,7 +138,7 @@ function gamePlay(){
             .map(playerID => ({id: playerID, name: players[playerID].name, alive: players[playerID].alive}))
         })
         setTimeout(() => {
-            io.to(gameState.mafiaId).emit('removeMafiaModal')
+            io.to(gameState.mafiaId).emit('removeMafiaModal', {true: false})
             io.emit('notTurnModal')
             gameState.phase = 1
             gamePlay()

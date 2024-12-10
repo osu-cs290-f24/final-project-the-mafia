@@ -64,12 +64,21 @@ socket.on('doctorModal', (data) => {
 
 
 // Mafia Modals
-socket.on('removeMafiaModal', () => {
+socket.on('removeMafiaModal', (data) => {
     var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
     var mafiaModal = document.getElementById("mafia-modal")
 
-    mafiaBackdrop.classList.add("mafiaHidden")
-    mafiaModal.classList.add("mafiaHidden")
+    if(data.true === true){
+        mafiaModal.classList.add("mafiaHidden")
+    } else {
+        if(!(mafiaModal.classList.contains('mafiaHidden'))){
+            mafiaModal.classList.add("mafiaHidden")
+            mafiaBackdrop.classList.add("mafiaHidden")
+        }
+        else{
+            mafiaBackdrop.classList.add("mafiaHidden")
+        }
+    }
 })
 
 socket.on('mafiaModal', (data) => {
