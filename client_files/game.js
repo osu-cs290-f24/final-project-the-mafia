@@ -34,12 +34,21 @@ socket.on('playerRoleDisplay', (data) => {
 
 
 // Doctor Modals
-socket.on('removeDoctorModal', () => {
+socket.on('removeDoctorModal', (data) => {
     var doctorBackdrop = document.getElementById("doctor-modal-backdrop")
     var doctorModal = document.getElementById("doctor-modal")
 
-    doctorBackdrop.classList.add("doctorHidden")
-    doctorModal.classList.add("doctorHidden")
+    if(data.true === true){
+        doctorModal.classList.add("doctorHidden")
+    } else {
+        if(!(doctorModal.classList.contains('doctorHidden'))){
+            doctorModal.classList.add("doctorHidden")
+            doctorBackdrop.classList.add("doctorHidden")
+        }
+        else{
+            doctorBackdrop.classList.add("doctorHidden")
+        }
+    }
 })
 
 socket.on('doctorModal', (data) => {
@@ -54,11 +63,14 @@ socket.on('doctorModal', (data) => {
 
     data.players.forEach(player => {
         let button = document.createElement("button")
-        button.textContent = player
+        button.textContent = player.name
         button.addEventListener('click', () => {
-
+            const targetID = player.id
+            socket.emit("doctorTarget", {targetID: player.id})
         })
-        doctorContent.appendChild(button)
+        if (player.alive) {
+            doctorContent.appendChild(button)
+        }
     })
 })
 
