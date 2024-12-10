@@ -129,7 +129,10 @@ function gamePlay(){
     if(gameState.phase === 0) {
         io.emit('notTurnModal')
         io.to(gameState.mafiaId).emit('yourTurnModal', { role: 'Mafia'})
-        io.to(gameState.mafiaId).emit('mafiaModal', { role: 'Mafia'})
+        io.to(gameState.mafiaId).emit('mafiaModal', { 
+            role: 'Mafia',
+            players: Object.keys(players).filter(playerID => playerID !== gameState.mafiaId).map(playerID => players[playerID].name)
+        })
         setTimeout(() => {
             io.to(gameState.mafiaId).emit('removeMafiaModal')
             io.emit('notTurnModal')

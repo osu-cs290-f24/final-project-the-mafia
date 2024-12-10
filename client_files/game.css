@@ -5,6 +5,14 @@ body{
     color: #e0e0e0;
     font-family: 'corleone', sans-serif;
 }
+
+h2 {
+    color: black;
+}
+
+p {
+    color: black;
+}
 #game_title{
     text-align: center;
 }

@@ -40,8 +40,25 @@ socket.on('removeMafiaModal', () => {
     mafiaModal.classList.add("mafiaHidden")
 })
 
-socket.on('mafiaModal', () => {
-    MafiaModal()
+socket.on('mafiaModal', (data) => {
+    var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
+    var mafiaModal = document.getElementById("mafia-modal")
+    var mafiaContent = mafiaModal.querySelector(".mafia-content")
+
+    mafiaBackdrop.classList.remove("mafiaHidden")
+    mafiaModal.classList.remove("mafiaHidden")
+
+    mafiaContent.innerHTML = '<h2>Choose who to kill:</h2>'
+
+    data.players.forEach(player => {
+        let button = document.createElement("button")
+        button.textContent = player
+        console.log("== mafia-content:", mafiaContent)
+        button.addEventListener('click', ()=> {
+            
+        })
+        mafiaContent.appendChild(button)
+    })
 })
 
 socket.on('removeModal', () => {
@@ -108,15 +125,6 @@ function timeRemaining() {
 }
 
 // Modal Username Implementation
-
-function MafiaModal() {
-    var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
-    var mafiaModal = document.getElementById("mafia-modal")
-
-    mafiaBackdrop.classList.remove("mafiaHidden")
-    mafiaModal.classList.remove("mafiaHidden")
-}
-
 function Modal() {
     var modalBackdrop = document.getElementById("modal-backdrop")
     var usernameModal = document.getElementById("username-modal")
