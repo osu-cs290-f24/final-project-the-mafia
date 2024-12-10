@@ -32,6 +32,18 @@ socket.on('playerRoleDisplay', (data) => {
     console.log("Your Role: ", playerRole)
 })
 
+socket.on('removeMafiaModal', () => {
+    var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
+    var mafiaModal = document.getElementById("mafia-modal")
+
+    mafiaBackdrop.classList.add("mafiaHidden")
+    mafiaModal.classList.add("mafiaHidden")
+})
+
+socket.on('mafiaModal', () => {
+    MafiaModal()
+})
+
 socket.on('removeModal', () => {
     Modal()
 })
@@ -96,6 +108,14 @@ function timeRemaining() {
 }
 
 // Modal Username Implementation
+
+function MafiaModal() {
+    var mafiaBackdrop = document.getElementById("mafia-modal-backdrop")
+    var mafiaModal = document.getElementById("mafia-modal")
+
+    mafiaBackdrop.classList.remove("mafiaHidden")
+    mafiaModal.classList.remove("mafiaHidden")
+}
 
 function Modal() {
     var modalBackdrop = document.getElementById("modal-backdrop")

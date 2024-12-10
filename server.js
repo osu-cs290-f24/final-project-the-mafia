@@ -69,6 +69,13 @@ io.on('connection', (socket) => {
 
     socket.emit('playerScreen', {id: players[socket.id].name})
 
+    socket.on('chooseTarget', (targetID) => {
+        if (socket.id === gameState.mafiaId && players[targetID]?.alive) {
+            gameState.mafiaTarget = targetID
+            console.log(`Mafia chose target: ${players[targetID].name}`)
+        }
+    })
+
     if(playerCount === 5){
         randomlyAssignRoles()
         Object.keys(players).forEach(playerID => {
@@ -79,7 +86,6 @@ io.on('connection', (socket) => {
             io.emit('removeModal')
             gamePlay()
         }, 10000)
-        // Implement the logic where if five players have joined the game, we randomly give out roles to three of the players
     }
 
     socket.on("send-message", (message) => {
@@ -123,8 +129,10 @@ function gamePlay(){
     if(gameState.phase === 0) {
         io.emit('notTurnModal')
         io.to(gameState.mafiaId).emit('yourTurnModal', { role: 'Mafia'})
+        io.to(gameState.mafiaId).emit('mafiaModal', { role: 'Mafia'})
         setTimeout(() => {
-           // players[gameState.mafiaTarget].alive = false
+            io.to(gameState.mafiaId).emit('removeMafiaModal')
+            io.emit('notTurnModal')
             gameState.phase = 1
             gamePlay()
         }, 5000)
