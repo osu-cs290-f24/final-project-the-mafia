@@ -108,6 +108,7 @@ io.on('connection', (socket) => {
         });
         setTimeout(() => {
             io.emit('removeModal')
+            gameState.roundNumber++
             gamePlay()
         }, 10000)
     }
@@ -221,6 +222,7 @@ function gamePlay(){
         setTimeout(() => {
             getVoteOutPlayer()
             voteOutPlayer()
+            gameState.roundNumber++
             gameState.mafiaTarget = null
             gameState.doctorTarget = null
             gameState.targetID = null
