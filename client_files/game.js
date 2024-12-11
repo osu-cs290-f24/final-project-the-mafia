@@ -231,12 +231,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 console.log('Voted for:', userName)
                 hasVoted = true
             }
-            else{
+            else {
                 alert('Already Voted')
             }
         })
     })
-})
+}) 
 
 // Timer Implementation
 const initialMinutes = 5;

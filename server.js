@@ -86,15 +86,51 @@ io.on('connection', (socket) => {
             io.to(gameState.sherifId).emit('removeSherifModal', {true: true})
         }
     })
-
+    // When the button is clicked, we need to keep track of the player with the most votes
     socket.on('playerVote', (data) => {
-        console.log(data.userName)
         const votedPlayerId = Object.keys(players).find(playerID => players[playerID].name === data.userName)
+
         if (votedPlayerId) { 
             gameState.playerVotes.push(votedPlayerId)
         }
-        if(gameState.playerVotes.length() === playersAlive){
-            
+
+        // If the majority of players have voted for someone
+        console.log("== playerVotes", gameState.playerVotes.length)
+        console.log("== playersAlive", playersAlive / 2)
+        if(gameState.playerVotes.length > playersAlive / 2) {
+            // Keep track of a player's vote count
+            const playerVoteCount = {}
+            // Debug statement to ensure that a majority vote has been reached
+            console.log("Majority vote reached")
+            // We have to initialize the player vote array first
+            gameState.playerVotes.forEach(playerID => {
+                if (!playerVoteCount[playerID]) {
+                    playerVoteCount[playerID] = 0
+                }
+                playerVoteCount[playerID]++
+            })
+
+            var maxVotes = 0
+            var targetID = null
+
+            for (let playerID in playerVoteCount) {
+                if (playerVoteCount[playerID] > maxVotes) {
+                    maxVotes = playerVoteCount[playerID]
+                    targetID = playerID
+                }
+            }
+
+
+            if (targetID) {
+                console.log(`${players[targetID].name} has been voted out`)
+                io.emit('playerKilled', {
+                    name: players[targetID].name
+                })
+                players[targetID].alive = false
+                playersAlive--
+            }
+        } else {
+            console.log("A majority vote has not been reached.")
         }
     })
 
@@ -221,7 +257,7 @@ function gamePlay(){
         setTimeout(() => {
             gameState.mafiaTarget = null
             gameState.doctorTarget = null
-            gameState.playerVotes = {}
+            gameState.playerVotes = []
             gameState.phase = 0
             gamePlay()
         }, 15000)
