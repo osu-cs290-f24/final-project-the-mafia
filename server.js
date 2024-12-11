@@ -221,6 +221,7 @@ function gamePlay(){
         setTimeout(() => {
             getVoteOutPlayer()
             voteOutPlayer()
+            
             gameState.mafiaTarget = null
             gameState.doctorTarget = null
             gameState.targetID = null
@@ -249,12 +250,22 @@ function getVoteOutPlayer() {
         })
 
         var maxVotes = 0
+        var playerTie = []
 
         for (let playerID in playerVoteCount) {
             if (playerVoteCount[playerID] > maxVotes) {
                 maxVotes = playerVoteCount[playerID]
+                playerTie = [playerID]
                 gameState.targetID = playerID
+                // The player's vote is equal to the max votes
+            } else if (playerVoteCount[playerID] === maxVotes) {
+                // We push them onto the array
+                playerTie.push(playerID)
             }
+        }
+
+        if (playerTie.length > 1) {
+            gameState.targetID = null
         }
         
     } else {
@@ -271,6 +282,8 @@ function voteOutPlayer() {
         io.to(gameState.targetID).emit('gameOver')
         players[gameState.targetID].alive = false
         playersAlive--
+    } else {
+        console.log("No player was voted out.")
     }
 }
 
