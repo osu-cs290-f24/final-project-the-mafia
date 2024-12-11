@@ -81,6 +81,12 @@ io.on('connection', (socket) => {
         }
    })
 
+   socket.on('sherifTarget', (data) => {
+    if (socket.id === gameState.sherifId) {
+       io.to(gameState.sherifId).emit('removeSherifModal', {true: true})
+    }
+})
+
     socket.emit('playerScreen', {id: players[socket.id].name})
 
     if(playerCount === 5){
@@ -163,10 +169,16 @@ function gamePlay(){
         }, 5000)
     } else if(gameState.phase === 2) {
         io.emit('notTurnModal')
-        io.to(gameState.sherifId).emit('yourTurnModal', { 
-            role: 'Sherif'
+        io.to(gameState.sherifId).emit('yourTurnModal', { role: 'Sherif'})
+        io.to(gameState.sherifId).emit('sherifModal', { 
+            role: 'Sherif',
+            players: Object.keys(players)
+            .filter(playerID => playerID !== gameState.sherifId)
+            .map(playerID => ({id: playerID, name: players[playerID].name, alive: players[playerID].alive, role: players[playerID].role}))
         })
         setTimeout(() => {
+            io.to(gameState.sherifId).emit('removeSherifModal', {true:false})
+            io.emit('notTurnModal')
             gameState.phase = 3
             gamePlay()
         }, 5000)
@@ -174,18 +186,20 @@ function gamePlay(){
         if(gameState.mafiaTarget !== null && gameState.doctorTarget !== null){
             if(players[gameState.mafiaTarget] !== players[gameState.doctorTarget]){
                 players[gameState.mafiaTarget].alive = false
+                playersAlive--
                 console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
             } else if (players[gameState.mafiaTarget] === players[gameState.doctorTarget]){
                 console.log(`${players[gameState.mafiaTarget].name} has been saved by the doctor.`)
             }
         }else if(gameState.mafiaTarget !== null && gameState.doctorTarget === null){
             players[gameState.mafiaTarget].alive = false
+            playersAlive--
             console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
         }
         io.emit('yourTurnModal')
-        gameState.mafiaTarget = null
-        gameState.doctorTarget = null
         setTimeout(() => {
+            gameState.mafiaTarget = null
+            gameState.doctorTarget = null
             gameState.playerVotes = {}
             gameState.phase = 0
             gamePlay()

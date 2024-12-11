@@ -32,6 +32,51 @@ socket.on('playerRoleDisplay', (data) => {
     console.log("Your Role: ", playerRole)
 })
 
+// Sherif Modals
+socket.on('removeSherifModal', (data) => {
+    var sherifBackdrop = document.getElementById("sherif-modal-backdrop")
+    var sherifModal = document.getElementById("sherif-modal")
+
+    if(data.true === true){
+        sherifModal.classList.add("sherifHidden")
+    } else {
+        if(!(sherifModal.classList.contains('sherifHidden'))){
+            sherifModal.classList.add("sherifHidden")
+            sherifBackdrop.classList.add("sherifHidden")
+        }
+        else{
+            sherifBackdrop.classList.add("sherifHidden")
+        }
+    }
+})
+
+socket.on('sherifModal', (data) => {
+    var sherifBackdrop = document.getElementById("sherif-modal-backdrop")
+    var sherifModal = document.getElementById("sherif-modal")
+    var sherifContent = sherifModal.querySelector(".sherif-content")
+
+    sherifBackdrop.classList.remove("sherifHidden")
+    sherifModal.classList.remove("sherifHidden")
+
+    sherifContent.innerHTML = '<h2>Check to see if they are the Mafia:</h2>'
+
+    data.players.forEach(player => {
+        let button = document.createElement("button")
+        button.textContent = player.name
+        button.addEventListener('click', () => {
+            const targetID = player.id
+            socket.emit("sherifTarget", {targetID: player.id})
+            if(player.role === 'Mafia'){
+                alert(player.name + ' is the Mafia!!!')
+            } else {
+                alert(player.name + ' is not the Mafia')
+            }
+        })
+        if (player.alive) {
+            sherifContent.appendChild(button)
+        }
+    })
+})
 
 // Doctor Modals
 socket.on('removeDoctorModal', (data) => {
