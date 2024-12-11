@@ -7,7 +7,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIo(server)
 
-const PORT = process.env.PORT || 3009
+const PORT = process.env.PORT || 3001
 
 var expressHandlebars = require('express-handlebars');
 var userData = require("./client_files/userData.json");
@@ -39,7 +39,8 @@ let gameState = {
     sherifId: null,
     mafiaTarget: null,
     doctorTarget: null,
-    playerVotes: []
+    playerVotes: [],
+    targetID: null
 }
 
 var players = {}
@@ -86,6 +87,8 @@ io.on('connection', (socket) => {
             io.to(gameState.sherifId).emit('removeSherifModal', {true: true})
         }
     })
+    // FIX PROBLEM TMRW: When a player is voted out and have (dead) next to their name, a player that hasn't voted
+    // that votes will append another (dead) text to the already dead person
     // When the button is clicked, we need to keep track of the player with the most votes
     socket.on('playerVote', (data) => {
         const votedPlayerId = Object.keys(players).find(playerID => players[playerID].name === data.userName)
@@ -119,16 +122,7 @@ io.on('connection', (socket) => {
                     targetID = playerID
                 }
             }
-
-
-            if (targetID) {
-                console.log(`${players[targetID].name} has been voted out`)
-                io.emit('playerKilled', {
-                    name: players[targetID].name
-                })
-                players[targetID].alive = false
-                playersAlive--
-            }
+            
         } else {
             console.log("A majority vote has not been reached.")
         }
@@ -259,10 +253,23 @@ function gamePlay(){
             gameState.doctorTarget = null
             gameState.playerVotes = []
             gameState.phase = 0
+
             gamePlay()
         }, 15000)
     }
 }
+
+function voteOutPlayer() {
+    if (gameState.targetID) {
+        console.log(`${players[gameState.targetID].name} has been voted out`)
+        io.emit('playerKilled', {
+            name: players[gameState.targetID].name
+        })
+        players[gameState.targetID].alive = false
+        playersAlive--
+    }
+}
+
 
 app.get('/', function (req, res) {
     //res.sendFile(path.join(__dirname, 'client_files', 'game.html'))
