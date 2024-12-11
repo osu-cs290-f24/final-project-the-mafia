@@ -96,36 +96,6 @@ io.on('connection', (socket) => {
         if (votedPlayerId) { 
             gameState.playerVotes.push(votedPlayerId)
         }
-
-        // If the majority of players have voted for someone
-        console.log("== playerVotes", gameState.playerVotes.length)
-        console.log("== playersAlive", playersAlive / 2)
-        if(gameState.playerVotes.length > playersAlive / 2) {
-            // Keep track of a player's vote count
-            const playerVoteCount = {}
-            // Debug statement to ensure that a majority vote has been reached
-            console.log("Majority vote reached")
-            // We have to initialize the player vote array first
-            gameState.playerVotes.forEach(playerID => {
-                if (!playerVoteCount[playerID]) {
-                    playerVoteCount[playerID] = 0
-                }
-                playerVoteCount[playerID]++
-            })
-
-            var maxVotes = 0
-            var targetID = null
-
-            for (let playerID in playerVoteCount) {
-                if (playerVoteCount[playerID] > maxVotes) {
-                    maxVotes = playerVoteCount[playerID]
-                    targetID = playerID
-                }
-            }
-            
-        } else {
-            console.log("A majority vote has not been reached.")
-        }
     })
 
     socket.emit('playerScreen', {id: players[socket.id].name})
@@ -249,13 +219,46 @@ function gamePlay(){
         }
         io.emit('yourTurnModal')
         setTimeout(() => {
+            getVoteOutPlayer()
+            voteOutPlayer()
             gameState.mafiaTarget = null
             gameState.doctorTarget = null
+            gameState.targetID = null
             gameState.playerVotes = []
             gameState.phase = 0
-
             gamePlay()
         }, 15000)
+    }
+}
+
+function getVoteOutPlayer() {
+    // If the majority of players have voted for someone
+    console.log("== playerVotes", gameState.playerVotes.length)
+    console.log("== playersAlive", playersAlive / 2)
+    if(gameState.playerVotes.length > playersAlive / 2) {
+        // Keep track of a player's vote count
+        const playerVoteCount = {}
+        // Debug statement to ensure that a majority vote has been reached
+        console.log("Majority vote reached")
+        // We have to initialize the player vote array first
+        gameState.playerVotes.forEach(playerID => {
+            if (!playerVoteCount[playerID]) {
+                playerVoteCount[playerID] = 0
+            }
+            playerVoteCount[playerID]++
+        })
+
+        var maxVotes = 0
+
+        for (let playerID in playerVoteCount) {
+            if (playerVoteCount[playerID] > maxVotes) {
+                maxVotes = playerVoteCount[playerID]
+                gameState.targetID = playerID
+            }
+        }
+        
+    } else {
+        console.log("A majority vote has not been reached.")
     }
 }
 
@@ -265,6 +268,7 @@ function voteOutPlayer() {
         io.emit('playerKilled', {
             name: players[gameState.targetID].name
         })
+        io.to(gameState.targetID).emit('gameOver')
         players[gameState.targetID].alive = false
         playersAlive--
     }
