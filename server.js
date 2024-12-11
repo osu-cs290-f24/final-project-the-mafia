@@ -39,7 +39,7 @@ let gameState = {
     sherifId: null,
     mafiaTarget: null,
     doctorTarget: null,
-    playerVotes: {}
+    playerVotes: []
 }
 
 var players = {}
@@ -82,10 +82,21 @@ io.on('connection', (socket) => {
    })
 
    socket.on('sherifTarget', (data) => {
-    if (socket.id === gameState.sherifId) {
-       io.to(gameState.sherifId).emit('removeSherifModal', {true: true})
-    }
-})
+        if (socket.id === gameState.sherifId) {
+            io.to(gameState.sherifId).emit('removeSherifModal', {true: true})
+        }
+    })
+
+    socket.on('playerVote', (data) => {
+        console.log(data.userName)
+        const votedPlayerId = Object.keys(players).find(playerID => players[playerID].name === data.userName)
+        if (votedPlayerId) { 
+            gameState.playerVotes.push(votedPlayerId)
+        }
+        if(gameState.playerVotes.length() === playersAlive){
+            
+        }
+    })
 
     socket.emit('playerScreen', {id: players[socket.id].name})
 

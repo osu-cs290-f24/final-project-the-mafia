@@ -218,6 +218,7 @@ form.addEventListener("submit", e => {
     getMessageInput.value = ""
 })
 
+
 document.addEventListener('DOMContentLoaded', (event) => {
     var voteButtons = document.querySelectorAll('#voteButton')
 
@@ -229,6 +230,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 socket.emit('playerVote', {userName: userName})
                 console.log('Voted for:', userName)
                 hasVoted = true
+            }
+            else{
+                alert('Already Voted')
             }
         })
     })
