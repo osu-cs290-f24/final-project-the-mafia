@@ -62,6 +62,7 @@ socket.on('sherifModal', (data) => {
     data.players.forEach(player => {
         let button = document.createElement("button")
         button.textContent = player.name
+        button.className = "sherif-button"
         button.addEventListener('click', () => {
             const targetID = player.id
             socket.emit("sherifTarget", {targetID: player.id})
@@ -108,6 +109,7 @@ socket.on('doctorModal', (data) => {
     data.players.forEach(player => {
         let button = document.createElement("button")
         button.textContent = player.name
+        button.className = "doctor-button"
         button.addEventListener('click', () => {
             const targetID = player.id
             socket.emit("doctorTarget", {targetID: player.id})
@@ -150,6 +152,7 @@ socket.on('mafiaModal', (data) => {
     data.players.forEach(player => {
         let button = document.createElement("button")
         button.textContent = player.name
+        button.className = "mafia-button"
         button.addEventListener('click', ()=> {
             const targetID = player.id
             socket.emit("mafiaTarget", {targetID: player.id})

@@ -7,7 +7,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIo(server)
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3009
 
 var expressHandlebars = require('express-handlebars');
 var userData = require("./client_files/userData.json");
