@@ -180,6 +180,11 @@ socket.on('playerKilled', (data) => {
     
 })
 
+socket.on('gameOver', () => {
+    var gameOverBackdrop = document.getElementById('gameOver-modal-backdrop')
+    gameOverBackdrop.classList.remove('gameOverHidden')
+})
+
 
 socket.on('removeModal', () => {
     Modal()

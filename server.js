@@ -189,6 +189,7 @@ function gamePlay(){
                     targetID: gameState.mafiaTarget,
                     name: players[gameState.mafiaTarget].name
                 })
+                io.to(mafiaTarget).emit('gameOver')
                 players[gameState.mafiaTarget].alive = false
                 playersAlive--
                 console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
@@ -200,6 +201,7 @@ function gamePlay(){
                 targetID: gameState.mafiaTarget,
                 name: players[gameState.mafiaTarget].name
             })
+            io.to(gameState.mafiaTarget).emit('gameOver')
             players[gameState.mafiaTarget].alive = false
             playersAlive--
             console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
