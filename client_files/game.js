@@ -1,7 +1,6 @@
-// Chat Implementation for Client
 const getMessageInput = document.getElementById("message-input")
 const form = document.getElementById("form")
-const chooseButton = document.getElementById('voteButton')
+let hasVoted = false
 
 socket.on('connect', () => {
     console.log("Connected to server with ID:", socket.id)
@@ -177,7 +176,6 @@ socket.on('playerKilled', (data) => {
             voteButton.remove()
         }
     }
-    
 })
 
 socket.on('gameOver', () => {
@@ -195,6 +193,7 @@ socket.on('notTurnModal', () => {
 })
 
 socket.on('yourTurnModal', (data) => {
+    hasVoted = false
     yourTurnModal()
 })
 
@@ -219,8 +218,20 @@ form.addEventListener("submit", e => {
     getMessageInput.value = ""
 })
 
-chooseButton.addEventListener('click', vote => {
-    // gets the name of the user that was voted for
+document.addEventListener('DOMContentLoaded', (event) => {
+    var voteButtons = document.querySelectorAll('.voteButton')
+
+    voteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if(!hasVoted) {
+                var userDiv = button.closest('.User')
+                var userName = userDiv.getAttribute('user-name')
+                //socket.emit('playerVote', {userName: userName})
+                console.log('Voted for:', userName)
+                hasVoted = true
+            }
+        })
+    })
 })
 
 // Timer Implementation
