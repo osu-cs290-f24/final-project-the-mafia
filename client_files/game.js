@@ -161,6 +161,25 @@ socket.on('mafiaModal', (data) => {
     })
 })
 
+socket.on('playerKilled', (data) => {
+    console.log(`${data.name} is now dead.`)
+    
+    const playerDiv = document.querySelector(`.User[user-name="${data.name}"]`)
+
+    if (playerDiv) {
+        const userNameDiv = playerDiv.querySelector('.user_name h4')
+        if (userNameDiv) {
+            userNameDiv.textContent += ' (Dead)'
+        }
+
+        const voteButton = playerDiv.querySelector('#voteButton')
+        if (voteButton) {
+            voteButton.remove()
+        }
+    }
+    
+})
+
 
 socket.on('removeModal', () => {
     Modal()

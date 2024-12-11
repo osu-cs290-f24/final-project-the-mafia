@@ -185,6 +185,10 @@ function gamePlay(){
     } else if(gameState.phase === 3) {
         if(gameState.mafiaTarget !== null && gameState.doctorTarget !== null){
             if(players[gameState.mafiaTarget] !== players[gameState.doctorTarget]){
+                io.emit('playerKilled', {
+                    targetID: gameState.mafiaTarget,
+                    name: players[gameState.mafiaTarget].name
+                })
                 players[gameState.mafiaTarget].alive = false
                 playersAlive--
                 console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
@@ -192,6 +196,10 @@ function gamePlay(){
                 console.log(`${players[gameState.mafiaTarget].name} has been saved by the doctor.`)
             }
         }else if(gameState.mafiaTarget !== null && gameState.doctorTarget === null){
+            io.emit('playerKilled', {
+                targetID: gameState.mafiaTarget,
+                name: players[gameState.mafiaTarget].name
+            })
             players[gameState.mafiaTarget].alive = false
             playersAlive--
             console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
