@@ -151,6 +151,14 @@ function randomlyAssignRoles() {
 }
 
 function gamePlay(){
+    if(players[gameState.mafiaId].alive === false) {
+        io.emit('winner', {mafiaWon: false})
+        return
+    }
+    if(playersAlive <= 2) {
+        io.emit('winner', {mafiaWon: true})
+        return
+    }
     if(gameState.phase === 0) {
         io.emit('notTurnModal')
         io.to(gameState.mafiaId).emit('yourTurnModal', { role: 'Mafia'})
@@ -219,6 +227,10 @@ function gamePlay(){
             console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
         }
         io.emit('yourTurnModal')
+        if(playersAlive <= 2) {
+            io.emit('winner', {mafiaWon: true})
+            return
+        }
         setTimeout(() => {
             getVoteOutPlayer()
             voteOutPlayer()
@@ -292,7 +304,12 @@ function voteOutPlayer() {
 app.get('/', function (req, res) {
     //res.sendFile(path.join(__dirname, 'client_files', 'game.html'))
         res.render('gamePage', { user_icons: userData });
+})
 
+app.get('/win/:winner', (req, res) => {
+    var winner = req.params.winner
+    var mafiaName = players[gameState.mafiaId].name
+    res.render(winner, { mafiaName })
 })
 
 server.listen(PORT, function() {

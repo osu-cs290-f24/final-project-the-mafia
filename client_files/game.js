@@ -201,6 +201,15 @@ socket.on('yourTurnModal', (data) => {
     yourTurnModal()
 })
 
+socket.on('winner', (data) => {
+    if(data.mafiaWon === true){
+        window.location.href = '/win/mafianWin'
+    } else {
+        window.location.href = '/win/civilianWin'
+    }
+
+})
+
 function displayMessage(user, message) {
     const div = document.createElement("div")
     div.textContent = `${user}: ${message}`
