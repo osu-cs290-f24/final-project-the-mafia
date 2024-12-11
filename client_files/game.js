@@ -219,14 +219,14 @@ form.addEventListener("submit", e => {
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    var voteButtons = document.querySelectorAll('.voteButton')
+    var voteButtons = document.querySelectorAll('#voteButton')
 
     voteButtons.forEach(button => {
         button.addEventListener('click', () => {
             if(!hasVoted) {
                 var userDiv = button.closest('.User')
                 var userName = userDiv.getAttribute('user-name')
-                //socket.emit('playerVote', {userName: userName})
+                socket.emit('playerVote', {userName: userName})
                 console.log('Voted for:', userName)
                 hasVoted = true
             }
