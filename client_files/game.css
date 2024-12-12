@@ -1,9 +1,15 @@
+@font-face {
+    font-family: 'corleone';
+    src: url('fonts/Corleone-Regular.otf') format('truetype');
+}
 body{
     padding: 0;
     margin: 0;
     background-color: #1a1a1a;
     color: #ffffff;
     font-family: 'corleone', sans-serif;
+    font-size: 30px;
+
 }
 
 h2 {
@@ -15,11 +21,15 @@ p {
 }
 #game_title{
     text-align: center;
+    font-size: 55px;
+    padding: 0;
+    margin: 9px;
 }
 #round_num{
     position: absolute;
     left: 50px;
-    top: 30px;
+    top: 20px;
+    font-size: 30px;
 }
 .game_state{
     color: #ff0000;
@@ -33,11 +43,11 @@ p {
     flex-direction: column;
     position: absolute;
 
-    height: 80%;
+    height: 87.5%;
     width: 250px;
     /*border: 5px solid #7a7a7a;*/
     right: 20px;
-    top: 120px;
+    top: 80px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
@@ -99,6 +109,7 @@ p {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-family: corleone, sans-serif;
 }
 
 #send-button:hover {
@@ -125,12 +136,13 @@ p {
 .User{
     display: flex;
     padding: 0px;
-    border: 7px solid #5e0000;
+    border: 7px solid #d10000;
     border-radius: 10px;
     margin-top: 4px;
     margin-bottom: 4px;
     margin-left: 60px;
     margin-right: 60px;
+
 
     flex-wrap: wrap;
     flex-direction: column;
@@ -142,15 +154,19 @@ p {
 }
 
 .User img{
-    width: 175px;
-    height: 175px;
+    width: 220px;
+    height: 150px;
     object-fit: cover;
-    margin: 0
+    margin: 0;
+    border-radius: 1px;
 }
 
 .user_name{
     text-align: center;
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: .75em;
 }
 
 #story_window{
@@ -183,6 +199,7 @@ p {
     margin: 5px;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.3s;
+    font-family: corleone, sans-serif;
 }
 
 #voteButton:hover {
