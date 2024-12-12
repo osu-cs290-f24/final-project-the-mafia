@@ -203,7 +203,7 @@ socket.on('yourTurnModal', (data) => {
 
 socket.on('winner', (data) => {
     if(data.mafiaWon === true){
-        window.location.href = '/win/mafianWin'
+        window.location.href = '/win/mafiaWin'
     } else {
         window.location.href = '/win/civilianWin'
     }

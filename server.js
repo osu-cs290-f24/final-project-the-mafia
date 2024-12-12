@@ -178,7 +178,7 @@ function gamePlay(){
             io.emit('notTurnModal')
             gameState.phase = 1
             gamePlay()
-        }, 5000)
+        }, 10000)
     } else if(gameState.phase === 1) {
         io.emit('notTurnModal')
         io.to(gameState.doctorId).emit('yourTurnModal', { role: 'Doctor'})
@@ -191,7 +191,7 @@ function gamePlay(){
             io.emit('notTurnModal')
             gameState.phase = 2
             gamePlay()
-        }, 5000)
+        }, 10000)
     } else if(gameState.phase === 2) {
         io.emit('notTurnModal')
         io.to(gameState.sherifId).emit('yourTurnModal', { role: 'Sherif'})
@@ -206,7 +206,7 @@ function gamePlay(){
             io.emit('notTurnModal')
             gameState.phase = 3
             gamePlay()
-        }, 5000)
+        }, 10000)
     } else if(gameState.phase === 3) {
         if(gameState.mafiaTarget !== null && gameState.doctorTarget !== null){
             if(players[gameState.mafiaTarget] !== players[gameState.doctorTarget]){
@@ -246,7 +246,7 @@ function gamePlay(){
             gameState.playerVotes = []
             gameState.phase = 0
             gamePlay()
-        }, 15000)
+        }, 45000)
     }
 }
 
