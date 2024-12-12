@@ -28,30 +28,6 @@ p {
     position: absolute;
 }
 
-#vote_state{
-    display: none;
-}
-
-#story_state{
-    /*display: none;*/
-}
-
-
-#time-title {
-    color: white;
-    right: 90px;
-    top: 30px;
-    position: absolute;
-}
-
-#time {
-    right: 41px;
-    top: 30px;
-    font-size: 1.4em;
-    position: absolute;
-}
-
-
 #chat{
     display:flex;
     flex-direction: column;

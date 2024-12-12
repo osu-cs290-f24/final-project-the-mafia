@@ -256,32 +256,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     })
 }) 
 
-// Timer Implementation
-const initialMinutes = 5;
-var time = initialMinutes * 60
-
-const countdownTimer = document.getElementById("time")
-
-setInterval(timeRemaining, 1000)
-
-function timeRemaining() {
-    const minutes = Math.floor(time / 60)
-    var seconds = time % 60;
-
-    if (time <= 0) {
-        clearInterval()
-        return
-    }
-
-    if (seconds < 10) {
-        seconds = '0' + seconds
-    }
-
-    countdownTimer.innerHTML = `${minutes}:${seconds}`
-
-    time--
-}
-
 // Modal Username Implementation
 function Modal() {
     var modalBackdrop = document.getElementById("modal-backdrop")
