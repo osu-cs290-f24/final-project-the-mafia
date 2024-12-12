@@ -210,6 +210,11 @@ socket.on('winner', (data) => {
 
 })
 
+socket.on('updateRound', (data) => {
+    var roundElement = document.getElementById('round_num')
+    roundElement.textContent = 'Round: ' + data.roundNum
+})
+
 function displayMessage(user, message) {
     const div = document.createElement("div")
     div.textContent = `${user}: ${message}`

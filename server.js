@@ -150,6 +150,11 @@ function randomlyAssignRoles() {
     }
 }
 
+function updateRoundNumber() {
+    gameState.roundNumber++
+    io.emit('updateRound', { roundNum: gameState.roundNumber })
+}
+
 function gamePlay(){
     if(players[gameState.mafiaId].alive === false) {
         io.emit('winner', {mafiaWon: false})
@@ -209,7 +214,7 @@ function gamePlay(){
                     targetID: gameState.mafiaTarget,
                     name: players[gameState.mafiaTarget].name
                 })
-                io.to(mafiaTarget).emit('gameOver')
+                io.to(gameState.mafiaTarget).emit('gameOver')
                 players[gameState.mafiaTarget].alive = false
                 playersAlive--
                 console.log(`${players[gameState.mafiaTarget].name} has been killed by the Mafia.`)
@@ -234,7 +239,7 @@ function gamePlay(){
         setTimeout(() => {
             getVoteOutPlayer()
             voteOutPlayer()
-            gameState.roundNumber++
+            updateRoundNumber()
             gameState.mafiaTarget = null
             gameState.doctorTarget = null
             gameState.targetID = null
