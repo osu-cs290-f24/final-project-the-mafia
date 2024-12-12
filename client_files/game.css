@@ -422,7 +422,16 @@ p {
     display: none;
   }
 
-#win-title{
+/*#mafiaWinmodal {
+    background: linear-gradient(to bottom, #1a1a1a, #000000),
+    url('https://img.pikbest.com/back_our/bg/20200910/bg/a41afbf8641a6_398578.jpg!sw800');
+}*/
+
+/*.mafiaWinhidden {
+    display: none;
+}*/
+
+#Mafiawin-title{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -430,20 +439,57 @@ p {
     text-align: center;
     color: white;
     background: linear-gradient(to bottom, #1a1a1a, #000000);
+    background-image: url("MafiaWinBackground.jpg");
     padding: 20px;
-
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
 }
-#win-title h1{
+#Mafiawin-title h1 {
     font-size: 3em;
     margin: 0;
     padding: 100px;
 }
-#win-title h4{
+#Mafiawin-title h4{
     font-size: 2em;
     margin: 0;
     padding: 50px;
 }
-#win-title h3{
+#Mafiawin-title h3{
+    font-size: 1.5em;
+    margin: 0;
+    padding: 20px;
+}
+
+#Civilianwin-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background: linear-gradient(to bottom, #1a1a1a, #000000);
+    background-image: url("CivilianWin.jpg");
+    padding: 20px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+#Civilianwin-title h1{
+    font-size: 3em;
+    margin: 0;
+    padding: 100px;
+}
+#Civilianwin-title h4{
+    font-size: 2em;
+    margin: 0;
+    padding: 50px;
+}
+#Civilianwin-title h3{
     font-size: 1.5em;
     margin: 0;
     padding: 20px;
@@ -481,16 +527,15 @@ p {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.gameover-content {
-    text-align: center;
-    padding: 20px;
-}
-
 .gameOver-content h2 {
     text-align: center;
-    padding: 20px;
+    bottom: 0;
+    top: 70%;
+    left: 0;
+    right: 0;
+    margin-top: 850px;
     color: white;
-    font-size: 50px;
+    font-size: 75px;
 }
 
 .gameOverHidden {
